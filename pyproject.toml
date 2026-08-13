@@ -1,0 +1,7 @@
+[project]
+name = "7-travel-io-cv"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []

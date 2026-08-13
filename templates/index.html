@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TRAVEL.io — AI Travel Planner</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <!-- ==================================================
+         BACKGROUND
+         ================================================== -->
+
+    <div class="page-bg">
+        <div class="gradient-circle circle-1"></div>
+        <div class="gradient-circle circle-2"></div>
+        <div class="gradient-circle circle-3"></div>
+    </div>
+
+
+    <!-- ==================================================
+         MAIN APPLICATION
+         ================================================== -->
+
+    <main class="app-container">
+
+
+        <!-- ==================================================
+             HERO
+             ================================================== -->
+
+        <section class="hero-section">
+
+            <div class="badge">
+                ✈️ TRAVEL.io
+                <span>AI Travel Intelligence</span>
+            </div>
+
+            <h1>
+                Plan Your Perfect Trip<br>
+                with AI
+            </h1>
+
+            <p>
+                Search flights, discover hotels, check weather,
+                assess your budget, and generate a personalized
+                travel itinerary with AI.
+            </p>
+
+        </section>
+
+
+        <!-- ==================================================
+             TRAVEL PLANNER
+             ================================================== -->
+
+        <section class="planner-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Where do you want to go?
+                    </h2>
+
+                    <p>
+                        Tell TRAVEL.io what kind of trip you're planning.
+                    </p>
+
+                </div>
+
+
+                <div class="status-pill">
+
+                    <span class="status-dot"></span>
+
+                    Online
+
+                </div>
+
+            </div>
+
+
+            <!-- INPUT -->
+
+            <div class="input-area">
+
+                <textarea
+                    id="userInput"
+                    placeholder="Plan a complete 7 days Japan trip from Bangladesh including flights, hotels and sightseeing under 2 lakhs..."
+                ></textarea>
+
+
+                <button
+                    id="sendBtn"
+                    onclick="sendMessage()"
+                >
+
+                    <span id="btnText">
+                        Generate Plan
+                    </span>
+
+                    <span
+                        id="btnLoader"
+                        class="loader hidden"
+                    ></span>
+
+                </button>
+
+            </div>
+
+
+            <!-- QUICK PROMPTS -->
+
+            <div class="quick-prompts">
+
+                <button
+                    onclick="setPrompt('Plan a complete 7 days Japan trip from India including flights, hotels and sightseeing under 2 lakhs.')"
+                >
+                    🇯🇵 Japan
+                </button>
+
+
+                <button
+                    onclick="setPrompt('Plan a 5 days Dubai trip from India with flights, hotels and sightseeing.')"
+                >
+                    🇦🇪 Dubai
+                </button>
+
+
+                <button
+                    onclick="setPrompt('Plan a 7 days Thailand trip from India with budget hotels and sightseeing.')"
+                >
+                    🇹🇭 Thailand
+                </button>
+
+
+                <button
+                    onclick="setPrompt('Give me all country flight info.')"
+                >
+                    🌎 Global Flights
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             WORKFLOW / SUPERVISOR
+             ================================================== -->
+
+        <section
+            id="workflowSection"
+            class="workflow-section hidden"
+        >
+
+            <div class="workflow-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        Supervisor Agent
+                    </span>
+
+                    <h2>
+                        Execution Plan
+                    </h2>
+
+                </div>
+
+
+                <span
+                    id="guardrailBadge"
+                    class="guardrail-badge"
+                >
+                    Guardrail passed
+                </span>
+
+            </div>
+
+
+            <p
+                id="supervisorReasoning"
+                class="supervisor-reasoning"
+            ></p>
+
+
+            <div
+                id="agentChips"
+                class="agent-chips"
+            ></div>
+
+        </section>
+
+
+        <!-- ==================================================
+             RESULT
+             ================================================== -->
+
+        <section
+            id="resultSection"
+            class="result-section hidden"
+        >
+
+            <div class="result-header">
+
+                <div>
+
+                    <span class="eyebrow">
+                        TRAVEL.io Generated Plan
+                    </span>
+
+                    <h2 id="resultTitle">
+                        Your AI Travel Plan
+                    </h2>
+
+                    <p id="threadInfo">
+                        Thread ID: -
+                    </p>
+
+                </div>
+
+
+                <div class="result-actions">
+
+                    <button
+                        class="copy-btn"
+                        onclick="copyResult()"
+                    >
+                        Copy
+                    </button>
+
+
+                    <button
+                        class="download-btn"
+                        onclick="downloadPDF()"
+                    >
+                        Download PDF
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="pdfContent"
+                class="pdf-content"
+            >
+
+                <h1 class="pdf-title">
+                    TRAVEL.io — AI Travel Plan
+                </h1>
+
+                <div
+                    id="resultBox"
+                    class="result-box"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             HUMAN IN THE LOOP
+             ================================================== -->
+
+        <section
+            id="approvalSection"
+            class="approval-section hidden"
+        >
+
+            <div class="approval-icon">
+                👤
+            </div>
+
+
+            <div class="approval-content">
+
+                <span class="eyebrow">
+                    Human-in-the-Loop
+                </span>
+
+
+                <h2>
+                    Review Your Travel Plan
+                </h2>
+
+
+                <p id="approvalRequest">
+
+                    Review the AI-generated draft.
+                    Approve it or provide feedback and
+                    TRAVEL.io will revise the plan.
+
+                </p>
+
+
+                <textarea
+                    id="approvalFeedback"
+                    class="feedback-input"
+                    placeholder="Example: Reduce hotel costs, add more sightseeing, and keep the total budget below ₹2 lakhs..."
+                ></textarea>
+
+
+                <div class="approval-actions">
+
+                    <button
+                        id="approveBtn"
+                        class="approve-btn"
+                        onclick="submitApproval(true)"
+                    >
+                        ✓ Approve & Generate Final
+                    </button>
+
+
+                    <button
+                        id="reviseBtn"
+                        class="revise-btn"
+                        onclick="submitApproval(false)"
+                    >
+                        ↻ Revise Using Feedback
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             ERROR
+             ================================================== -->
+
+        <section
+            id="errorBox"
+            class="error-box hidden"
+        ></section>
+
+
+    </main>
+
+
+    <!-- ==================================================
+         FOOTER
+         ================================================== -->
+
+    <footer>
+
+        <strong>TRAVEL.io</strong>
+
+        <span> · </span>
+
+        Built with FastAPI · LangGraph · MCP · Groq · PostgreSQL
+
+    </footer>
+
+
+    <!-- ==================================================
+         JAVASCRIPT LIBRARIES
+         ================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
