@@ -14,7 +14,7 @@ from langchain_groq import ChatGroq
 # ENVIRONMENT
 # ============================================================
 
-load_dotenv()
+load_dotenv(override=True)
 
 # SSL certificate configuration
 # This helps avoid SSL certificate/path issues on some systems.

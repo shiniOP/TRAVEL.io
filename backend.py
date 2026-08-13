@@ -31,7 +31,7 @@ from mcp_client import (
 )
 
 # Environment
-load_dotenv()
+load_dotenv(override=True)
 
 # to prevent SSL certificate path issues
 os.environ["SSL_CERT_FILE"] = certifi.where()
