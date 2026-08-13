@@ -7,7 +7,7 @@ import certifi
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 from langchain_mcp_adapters.client import MultiServerMCPClient
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 
 
 # ============================================================
@@ -49,11 +49,10 @@ if not GROQ_API_KEY:
     )
 
 
-llm = ChatGoogleGenerativeAI(
-    model="Gemini 3.1 Flash Lite",
-    google_api_key=GROQ_API_KEY,
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile",
+    api_key=os.getenv("GROQ_API_KEY"),
 )
-
 
 # ============================================================
 # WEATHER MCP SERVER PATH
