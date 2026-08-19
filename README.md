@@ -1,3 +1,4 @@
+...................................................................................................................................................................
 ✈️ TRAVEL.io — AI Multi-Agent Travel Planner
 
 TRAVEL.io is an AI-powered multi-agent travel planning platform that turns natural-language travel requests into practical, budget-aware itineraries. It combines LangGraph, MCP, Groq, FastAPI, PostgreSQL, and Docker to coordinate specialized travel agents and external tools.
@@ -55,3 +56,5 @@ Reproducible application environment
 Ready for cloud deployment
 ☁️ Cloud Deployment
 Deployed using Docker on Render
+
+...................................................................................................................................................................
